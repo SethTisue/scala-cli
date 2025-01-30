@@ -60,6 +60,7 @@ object ElementsUtils {
             case _: Script            => "sc:"
             case _: MarkdownFile      => "md:"
             case _: JarFile           => "jar:"
+            case _: ClassFile         => "class:"
           }
           Iterator(prefix, elem.path.toString, "\n").map(bytes)
         case v: Virtual =>

@@ -84,6 +84,11 @@ final case class Script(base: os.Path, subPath: os.SubPath, inputArg: Option[Str
 final case class SourceScalaFile(base: os.Path, subPath: os.SubPath)
     extends OnDisk with SourceFile with ScalaFile
 
+final case class ClassFile(base: os.Path, subPath: os.SubPath)
+    extends OnDisk with SourceFile {
+  lazy val path: os.Path = base / subPath
+}
+
 final case class ProjectScalaFile(base: os.Path, subPath: os.SubPath)
     extends OnDisk with SourceFile with ScalaFile
 

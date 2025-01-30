@@ -516,6 +516,8 @@ object Build {
     projectRootDir(root, projectName) / "classes"
   def classesDir(root: os.Path, projectName: String, scope: Scope, suffix: String = ""): os.Path =
     classesRootDir(root, projectName) / s"${scope.name}$suffix"
+  def inputClassesDir(root: os.Path): os.Path =
+    root / Constants.workspaceDirName / "inputClasses-TODO"
 
   def resourcesRegistry(
     root: os.Path,
@@ -893,6 +895,13 @@ object Build {
 
     val classesDir0 = classesDir(inputs.workspace, inputs.projectName, scope)
     val scaladocDir = classesDir(inputs.workspace, inputs.projectName, scope, suffix = "-doc")
+
+    val inputClassesDir0 = inputClassesDir(inputs.workspace)
+    inputs.elements.foreach(println)
+    for classFile <- inputs.elements.collect{case cf: ClassFile => cf}
+    do
+      println(s"@@@ $classFile")
+      os.copy(classFile.path, inputClassesDir0, replaceExisting = true, createFolders = true)
 
     val generateSemanticDbs =
       options.scalaOptions.semanticDbOptions.generateSemanticDbs.getOrElse(false)
